@@ -7,6 +7,7 @@
       "@layouts/*": ["src/layouts/*"], 
       "@actions/*": ["src/actions/*"],
       "@db/*": ["src/db/*"],
+      "@interfaces/*": ["src/interfaces/*"],
     }
   }
 }
