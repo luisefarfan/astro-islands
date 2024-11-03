@@ -18,5 +18,5 @@ export default defineConfig({
     serverIslands: true
   },
 
-  adapter: vercel()
+  adapter: cloudflare()
 });
