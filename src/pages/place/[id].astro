@@ -1,0 +1,56 @@
+---
+import Star from '@components/Star.astro';
+import MainLayout from '@layouts/MainLayout.astro';
+import type { Place } from '@prisma/client';
+import type { GetStaticPaths } from 'astro';
+import { actions } from 'astro:actions';
+import { Image } from 'astro:assets';
+
+export const getStaticPaths = (async () => {
+  const { data, error } = await actions.getPlaces();
+
+  if (error || !data) {
+    console.log(error);
+    throw new Error('Error getting places in place/[id].astro');
+  }
+
+  return data.places.map((place) => ({
+    params: { id: place.id },
+    props: { place },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  place: Place;
+}
+
+const { place } = Astro.props;
+const { id } = Astro.params;
+
+const imageUrl = `/assets/images/${place.image}`;
+---
+
+<MainLayout>
+  <div class="grid grid-cols-2 gap-2">
+    <div class="bg-white/80 p-5 rounded-xl">
+      <h1 class="text-2xl font-bold">#{id} - {place.title}</h1>
+      <p>{place.description}</p>
+
+      <div class="flex flex-1">
+        {Array.from({ length: Number(place.avg_rating) }).map(() => <Star />)}
+      </div>
+
+      <!-- TODO: Server Island -->
+    </div>
+
+    <div>
+      <Image
+        class="w-full h-96 object-cover rounded-xl"
+        src={imageUrl}
+        alt={place.title}
+        width={800}
+        height={800}
+      />
+    </div>
+  </div></MainLayout
+>
