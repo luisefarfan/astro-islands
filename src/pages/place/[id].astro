@@ -15,8 +15,8 @@ export const getStaticPaths = (async () => {
     throw new Error('Error getting places in place/[id].astro');
   }
 
-  return data.places.map((place) => ({
-    params: { id: place.id },
+  return data.places.map((place: Place) => ({
+    params: { id: place.id.toString() },
     props: { place },
   }));
 }) satisfies GetStaticPaths;

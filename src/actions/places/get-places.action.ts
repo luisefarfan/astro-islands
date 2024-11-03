@@ -1,5 +1,6 @@
 import { prisma } from "@db/index";
 import { defineAction } from "astro:actions";
+import type { Place } from "@interfaces/Place";
 
 export const getPlaces = defineAction({
   accept: 'json',
@@ -7,7 +8,7 @@ export const getPlaces = defineAction({
     try {
       const places = await prisma.place.findMany();
 
-      return { success: true, places }
+      return { success: true, places: places as unknown as Place[] }
     } catch (error) {
       console.log(error);
       throw new Error('Error getting places');
