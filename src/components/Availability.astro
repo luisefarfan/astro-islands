@@ -1,0 +1,29 @@
+---
+import { actions } from 'astro:actions';
+
+interface Props {
+  placeId: string;
+}
+
+const { placeId } = Astro.props;
+
+const { data, error } = await actions.getAvailabilityById(placeId);
+// const { data, error } = await Astro.callAction(
+//   actions.getAvailabilityById,
+//   placeId
+// );
+
+if (error || !data) {
+  throw new Error('Error getting availability');
+}
+
+const { isAvailable, spotsAvailable, message } = data ?? {};
+---
+
+{
+  isAvailable ? (
+    <p class="bg-blue-300 mt-5 text-center rounded-xl p-2">{message}</p>
+  ) : (
+    <p class="bg-blue-300 mt-5 text-center rounded-xl p-2">{message}</p>
+  )
+}

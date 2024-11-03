@@ -1,4 +1,5 @@
 ---
+import Availability from '@components/Availability.astro';
 import Star from '@components/Star.astro';
 import MainLayout from '@layouts/MainLayout.astro';
 import type { Place } from '@prisma/client';
@@ -41,6 +42,14 @@ const imageUrl = `/assets/images/${place.image}`;
       </div>
 
       <!-- TODO: Server Island -->
+      <Availability server:defer placeId={id.toString()}>
+        <p
+          slot="fallback"
+          class="bg-gray-500 mt-5 text-center rounded-xl p-2 animate-pulse"
+        >
+          Cargando...
+        </p>
+      </Availability>
     </div>
 
     <div>
@@ -52,5 +61,5 @@ const imageUrl = `/assets/images/${place.image}`;
         height={800}
       />
     </div>
-  </div></MainLayout
->
+  </div>
+</MainLayout>
