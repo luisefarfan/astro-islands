@@ -7,6 +7,8 @@ import node from '@astrojs/node';
 
 import cloudflare from '@astrojs/cloudflare';
 
+import vercel from '@astrojs/vercel/serverless';
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind()],
@@ -16,5 +18,5 @@ export default defineConfig({
     serverIslands: true
   },
 
-  adapter: cloudflare()
+  adapter: vercel()
 });
